@@ -2,9 +2,7 @@ const express = require("express");
 const router = express.Router();
 const useCtrl = require('../controller/userCtrl');
 
-//
-router
-
-.put('/update/:id', useCtrl.update);
+// Route to handle create operation
+router.post('/create', useCtrl.create);
 
 module.exports = router;

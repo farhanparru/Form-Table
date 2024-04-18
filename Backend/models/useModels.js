@@ -13,6 +13,6 @@ const recordSchema = new mongoose.Schema({
 });
 
 
-const Record = mongoose.model('Record', recordSchema);
+const userData = mongoose.model('userData', recordSchema);
 
-module.exports = Record;
+module.exports = userData;

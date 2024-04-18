@@ -1,5 +1,5 @@
-
-import React,{useState} from "react";
+import React, { useState } from "react";
+import axios from 'axios'
 
 function Form({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -12,20 +12,30 @@ function Form({ onSubmit }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    onSubmit(formData);
+
+  try {
+    const response = await axios.post('http://localhost:3000/api/users/create', formData);
+  
+    onSubmit(response.data.data);
     setFormData({ name: "", age: "" });
+  } catch (error) {
+   alert(error)
+  }
+
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} 
+    style={{ maxWidth: "400px", margin: "0 auto" }}>
       <input
         type="text"
         name="name"
         placeholder="Name"
         value={formData.name}
         onChange={handleChange}
+        style={{ marginBottom: "10px", padding: "5px", width: "100%" }}
       />
       <input
         type="number"
@@ -33,10 +43,15 @@ function Form({ onSubmit }) {
         placeholder="Age"
         value={formData.age}
         onChange={handleChange}
+        style={{ marginBottom: "10px", padding: "5px", width: "100%" }}
       />
-      <button type="submit">Submit</button>
+      <button type="submit" 
+      style={{ padding: "10px", width: 
+      "100%", backgroundColor: 
+      "blue", color: "white", border: "none" }}>
+      Submit</button>
     </form>
   );
 }
 
-export default Form
+export default Form;
