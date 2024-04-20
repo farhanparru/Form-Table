@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa'; 
-const Table = ({ data}) => {
+import {useParams} from 'react-router-dom'
+import axios from 'axios'
+
+
+ const Table = ({ data}) => {
+
+  const {id} = useParams()
+  console.log(id);
+
+
+  const handleupdate = async (id,name,age) =>{
+    
+     const res = await axios.put(`http://localhost:3000/api/users/update/${id}`,{
+       name:name,
+       age:age
+     })
+     
+     console.log(res.data);
+  
+   }
+  
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <table style={{ borderCollapse: 'collapse', width: '60%' }}>
@@ -18,7 +38,7 @@ const Table = ({ data}) => {
               <td style={styles.tableData}>{item.age}</td>
               <td style={styles.tableData}>
              
-                <FaEdit style={styles.icon} onClick={() =>(index)} />
+                  <FaEdit style={styles.icon}  onClick={() => handleupdate(item._id, item.name, item.age)} />
                
                 <FaTrash style={styles.icon} />
               </td>
